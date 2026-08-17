@@ -84,6 +84,15 @@ $config['frontpage']['order'] = array('routers', 'commands', 'parameter', 'butto
 Sets the order of the sections that are displayed.
 
 ```php
+$config['frontpage']['routers_label'] = 'Router to use';
+$config['frontpage']['routing_instances_label'] = 'Routing instance';
+$config['frontpage']['commands_label'] = 'Command to issue';
+$config['frontpage']['parameter_label'] = 'Parameter';
+```
+Sets the label displayed above each of the sections. Each label can be set on
+its own, the others keep their default value.
+
+```php
 $config['frontpage']['router_count'] = 5;
 ```
 Sets the number of routers to show on the front page before the list scrolls. If

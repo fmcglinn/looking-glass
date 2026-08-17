@@ -76,6 +76,11 @@ $config = array(
     'show_title' => true,
     // Show visitor IP address
     'show_visitor_ip' => true,
+    // Labels of the frontpage elements, one per element which has one
+    'routers_label' => 'Router to use',
+    'routing_instances_label' => 'Routing instance',
+    'commands_label' => 'Command to issue',
+    'parameter_label' => 'Parameter',
     // Frontpage order, you can use:
     // routers, routing instances, commands, parameter, buttons
     'order' => array(

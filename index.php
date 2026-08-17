@@ -66,9 +66,14 @@ final class LookingGlass {
       return $command_count;
   }
 
+  private function render_label($key, $for) {
+    print('<label class="form-label" for="'.$for.'">'.
+      htmlentities($this->frontpage[$key]).'</label>');
+  }
+
   private function render_routers() {
     print('<div class="mb-3">');
-    print('<label class="form-label" for="routers">Router to use</label>');
+    $this->render_label('routers_label', 'routers');
     print('<select size="'.$this->router_count().'" class="form-select" name="routers" id="routers">');
 
     $first = true;
@@ -94,7 +99,7 @@ final class LookingGlass {
 
   private function render_commands() {
     print('<div class="mb-3">');
-    print('<label class="form-label" for="query">Command to issue</label>');
+    $this->render_label('commands_label', 'query');
     print('<select size="'.$this->command_count().'" class="form-select" name="query" id="query">');
     $selected = ' selected="selected"';
     foreach (array_keys($this->doc) as $cmd) {
@@ -114,7 +119,7 @@ final class LookingGlass {
       $requester = "";
     }
     print('<div class="mb-3">');
-    print('<label class="form-label for="input-param">Parameter</label>');
+    $this->render_label('parameter_label', 'input-param');
     print('<div class="input-group mb-3">');
     print('<input class="form-control" name="parameter" id="input-param" autofocus value="'.$requester.'" />');
     print('<button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#help">');
@@ -131,7 +136,7 @@ final class LookingGlass {
     }
 
     print('<div class="mb-3">');
-    print('<label class="form-label" for="routing-instances">Routing instance</label>');
+    $this->render_label('routing_instances_label', 'routing-instances');
     print('<select size="'.($routing_instances_count + 1).'" class="form-select" name="routing_instance" id="routing-instances">');
     print('<option value="none" selected>None</option>');
     foreach ($this->routing_instances as $name => $display) {
