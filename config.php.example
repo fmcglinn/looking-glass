@@ -20,6 +20,11 @@ $config['frontpage']['image'] = 'logo.png';
 // Disclaimer to inform people using the looking glass
 // Set it to null to not display a disclaimer
 $config['frontpage']['disclaimer'] = 'This is a disclaimer!';
+// Labels of the frontpage elements, each one can be set on its own
+$config['frontpage']['routers_label'] = 'Router to use';
+$config['frontpage']['routing_instances_label'] = 'Routing instance';
+$config['frontpage']['commands_label'] = 'Command to issue';
+$config['frontpage']['parameter_label'] = 'Parameter';
 
 // Things to remove from the output (PHP compatible regex)
 $config['filters']['output'][] = '/(client1|client2)/';
