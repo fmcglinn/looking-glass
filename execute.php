@@ -88,10 +88,12 @@ if (isset($_POST['query']) && !empty($_POST['query']) &&
     if (empty(trim($_POST['routing_instance']))) {
       $error = 'Empty routing instance.';
       print(json_encode(array('error' => $error)));
+      return;
     } elseif (!array_key_exists($_POST['routing_instance'], $config['routing_instances'])) {
       // Avoid people trying to use a crafted routing instance name
       $error = 'Invalid routing instance. Given routing instance is not configured.';
       print(json_encode(array('error' => $error)));
+      return;
     } else {
       $routing_instance = $_POST['routing_instance'];
     }
