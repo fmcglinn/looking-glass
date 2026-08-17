@@ -31,6 +31,7 @@ final class LookingGlass {
   private $captcha;
   private $routers;
   private $routing_instances;
+  private $routing_instances_required;
   private $doc;
 
   public function __construct($config) {
@@ -44,6 +45,7 @@ final class LookingGlass {
     $this->routers = $config['routers'];
     $this->doc = $config['doc'];
     $this->routing_instances = $config['routing_instances'];
+    $this->routing_instances_required = $config['routing_instances_required'];
   }
 
   private function router_count() {
@@ -135,12 +137,27 @@ final class LookingGlass {
         return;
     }
 
+    // The global routing table is offered as a choice of its own unless it
+    // has been given a name in the configuration, in which case it is listed
+    // like the other routing instances.
+    $name_the_global_table = !$this->routing_instances_required &&
+      !array_key_exists('none', $this->routing_instances);
+    $size = $name_the_global_table ?
+      $routing_instances_count + 1 : $routing_instances_count;
+
     print('<div class="mb-3">');
     $this->render_label('routing_instances_label', 'routing-instances');
-    print('<select size="'.($routing_instances_count + 1).'" class="form-select" name="routing_instance" id="routing-instances">');
-    print('<option value="none" selected>None</option>');
+    print('<select size="'.$size.'" class="form-select" name="routing_instance" id="routing-instances">');
+
+    $selected = ' selected="selected"';
+    if ($name_the_global_table) {
+      print('<option value="none"'.$selected.'>None</option>');
+      $selected = '';
+    }
+
     foreach ($this->routing_instances as $name => $display) {
-      print('<option value="'.$name.'">'.$display.'</option>');
+      print('<option value="'.$name.'"'.$selected.'>'.$display.'</option>');
+      $selected = '';
     }
     print('</select>');
     print('</div>');

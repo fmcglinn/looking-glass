@@ -141,11 +141,21 @@ $config['tools']['traceroute_options'] = '-A -q1 -w2 -m15';
 $config['tools']['traceroute6'] = 'traceroute6';
 $config['tools']['traceroute4'] = 'traceroute';
 
-// Enables VRF subsystem
-$config['vrfs']['enabled'] = true;
-// The default IPv4 vrf
-$config['vrfs']['vrfs'][] = 'inet.0';
-// The default IPv6 vrf
-$config['vrfs']['vrfs'][] = 'inet6.0';
+// Routing instances (also known as routing tables or VRFs) available on all
+// routers. The key is the name used in commands sent to routers, the value is
+// the name displayed to users. Suffixes such as 'inet.0' and 'inet6.0' can be
+// omitted for Juniper devices.
+// The key 'none' is reserved for the global routing table and is never sent
+// to a router. Use it to give the global routing table a name of your own,
+// otherwise it is offered first as 'None'.
+$config['routing_instances'] = array(
+  'none' => 'Best effort',
+  'vrf-internet' => 'Internet',
+  'vrf-mgmt' => 'Management'
+);
+// Force lookups to be made against a routing instance. When true the "None"
+// choice is removed from the selection and queries without a valid routing
+// instance are rejected. Defaults to false.
+$config['routing_instances_required'] = true;
 
 // End of config.php
