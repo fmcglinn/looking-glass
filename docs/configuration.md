@@ -408,9 +408,10 @@ configured routing instance are rejected. Defaults to `false`, meaning users
 may choose `None` and query the global routing table. Has no effect when no
 routing instance is configured.
 
-Naming the global routing table with the `none` key keeps it available even
-when routing instances are required, since it is then a choice of its own
-rather than the absence of one.
+The global routing table is not a routing instance, so naming it with the
+`none` key does not make it a valid answer when one is required. It is then
+removed from the selection and refused on submission like any other query
+which does not name a routing instance.
 
 ### Misc.
 
