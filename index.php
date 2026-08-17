@@ -132,16 +132,23 @@ final class LookingGlass {
   }
 
   private function render_routing_instances() {
-    $routing_instances_count = count($this->routing_instances);
+    $routing_instances = $this->routing_instances;
+
+    // The global routing table is not a routing instance, so it is not a
+    // valid answer when one is required, named in the configuration or not.
+    if ($this->routing_instances_required) {
+      unset($routing_instances['none']);
+    }
+
+    $routing_instances_count = count($routing_instances);
     if ($routing_instances_count === 0) {
         return;
     }
 
-    // The global routing table is offered as a choice of its own unless it
-    // has been given a name in the configuration, in which case it is listed
-    // like the other routing instances.
+    // Offered as a choice of its own unless it has been given a name in the
+    // configuration, in which case it is listed like the routing instances.
     $name_the_global_table = !$this->routing_instances_required &&
-      !array_key_exists('none', $this->routing_instances);
+      !array_key_exists('none', $routing_instances);
     $size = $name_the_global_table ?
       $routing_instances_count + 1 : $routing_instances_count;
 
@@ -155,7 +162,7 @@ final class LookingGlass {
       $selected = '';
     }
 
-    foreach ($this->routing_instances as $name => $display) {
+    foreach ($routing_instances as $name => $display) {
       print('<option value="'.$name.'"'.$selected.'>'.$display.'</option>');
       $selected = '';
     }

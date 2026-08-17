@@ -83,30 +83,27 @@ if (isset($_POST['query']) && !empty($_POST['query']) &&
 
   $routing_instance = false;
   if (count($config['routing_instances']) > 0) {
-    $requested = isset($_POST['routing_instance']) ?
-      $_POST['routing_instance'] : 'none';
-
-    if (mb_strtolower($requested) === 'none') {
-      // The global routing table, which is never named to the router. Refuse
-      // it only when a routing instance is required and the global table has
-      // not been made a choice of its own.
-      if ($config['routing_instances_required'] &&
-          !array_key_exists('none', $config['routing_instances'])) {
+    if (!isset($_POST['routing_instance']) ||
+        mb_strtolower($_POST['routing_instance']) === 'none') {
+      // The global routing table, which is never named to the router. It is
+      // not a routing instance, so it is refused when one is required, named
+      // in the configuration or not.
+      if ($config['routing_instances_required']) {
         $error = 'A routing instance must be selected.';
         print(json_encode(array('error' => $error)));
         return;
       }
-    } elseif (trim($requested) === '') {
+    } elseif (trim($_POST['routing_instance']) === '') {
       $error = 'Empty routing instance.';
       print(json_encode(array('error' => $error)));
       return;
-    } elseif (!array_key_exists($requested, $config['routing_instances'])) {
+    } elseif (!array_key_exists($_POST['routing_instance'], $config['routing_instances'])) {
       // Avoid people trying to use a crafted routing instance name
       $error = 'Invalid routing instance. Given routing instance is not configured.';
       print(json_encode(array('error' => $error)));
       return;
     } else {
-      $routing_instance = $requested;
+      $routing_instance = $_POST['routing_instance'];
     }
   }
   log_to_file($routing_instance);
