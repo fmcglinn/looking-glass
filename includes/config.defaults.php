@@ -163,6 +163,11 @@ $config = array(
   // Must be a an array with $key => $value pairs
   'routing_instances' => array(),
 
+  // Force lookups to be made against a routing instance. When true the "None"
+  // choice is removed from the selection and queries without a valid routing
+  // instance are rejected. Has no effect if no routing instance is configured.
+  'routing_instances_required' => false,
+
   // Misc
   'misc' => array(
     // Allow private ASN

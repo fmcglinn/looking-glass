@@ -144,5 +144,9 @@ $config['routing_instances'] = array(
   'vrf-internet' => 'Internet',
   'vrf-mgmt' => 'Management'
 );
+// Force lookups to be made against a routing instance. When true the "None"
+// choice is removed from the selection and queries without a valid routing
+// instance are rejected. Defaults to false.
+$config['routing_instances_required'] = true;
 
 // End of config.php

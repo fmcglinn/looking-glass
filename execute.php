@@ -82,10 +82,17 @@ if (isset($_POST['query']) && !empty($_POST['query']) &&
   }
 
   $routing_instance = false;
-  if (isset($_POST['routing_instance']) &&
-      mb_strtolower($_POST['routing_instance']) !== 'none' &&
-      count($config['routing_instances']) > 0) {
-    if (empty(trim($_POST['routing_instance']))) {
+  if (count($config['routing_instances']) > 0) {
+    if (!isset($_POST['routing_instance']) ||
+        mb_strtolower($_POST['routing_instance']) === 'none') {
+      // No routing instance asked for, query the global routing table unless
+      // the configuration forbids it.
+      if ($config['routing_instances_required']) {
+        $error = 'A routing instance must be selected.';
+        print(json_encode(array('error' => $error)));
+        return;
+      }
+    } elseif (trim($_POST['routing_instance']) === '') {
       $error = 'Empty routing instance.';
       print(json_encode(array('error' => $error)));
       return;
