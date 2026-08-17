@@ -363,10 +363,17 @@ documentation.
 ### Routing Instances
 
 !!! note
-    This feature is currently only available for Juniper Junos devices.
+    This feature is only available for Juniper Junos, Cisco IOS-XR and
+    MikroTik RouterOS devices. On other platforms the selection is ignored
+    and the query is made against the global routing table.
+
+    Coverage varies per command. Junos and RouterOS 7 honour the routing
+    instance for every command. IOS-XR honours it for route lookups, ping
+    and traceroute, but not for AS-path lookups. RouterOS 6 honours it for
+    ping and traceroute only.
 
 ```php
-$config['routing_instances'] => array(
+$config['routing_instances'] = array(
   'vrf-internet' => 'Internet', 'vrf-mgmt' => 'Management'
 );
 ```
