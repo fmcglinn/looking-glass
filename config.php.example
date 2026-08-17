@@ -145,7 +145,11 @@ $config['tools']['traceroute4'] = 'traceroute';
 // routers. The key is the name used in commands sent to routers, the value is
 // the name displayed to users. Suffixes such as 'inet.0' and 'inet6.0' can be
 // omitted for Juniper devices.
+// The key 'none' is reserved for the global routing table and is never sent
+// to a router. Use it to give the global routing table a name of your own,
+// otherwise it is offered first as 'None'.
 $config['routing_instances'] = array(
+  'none' => 'Best effort',
   'vrf-internet' => 'Internet',
   'vrf-mgmt' => 'Management'
 );
