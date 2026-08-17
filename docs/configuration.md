@@ -394,6 +394,15 @@ is the name which will be exposed to the users on selection.
 The suffixes such as `inet.0` and `inet6.0` can be omitted for Juniper
 devices, only the names of routing instances are needed.
 
+```php
+$config['routing_instances_required'] = false;
+```
+Force lookups to be made against a routing instance. When set to `true` the
+`None` choice is removed from the selection and queries which do not name a
+configured routing instance are rejected. Defaults to `false`, meaning users
+may choose `None` and query the global routing table. Has no effect when no
+routing instance is configured.
+
 ### Misc.
 
 ```php
