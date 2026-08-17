@@ -132,14 +132,20 @@ final class LookingGlass {
         return;
     }
 
+    // The global routing table is offered as a choice of its own unless it
+    // has been given a name in the configuration, in which case it is listed
+    // like the other routing instances.
+    $name_the_global_table = !$this->routing_instances_required &&
+      !array_key_exists('none', $this->routing_instances);
+    $size = $name_the_global_table ?
+      $routing_instances_count + 1 : $routing_instances_count;
+
     print('<div class="mb-3">');
     print('<label class="form-label" for="routing-instances">Routing instance</label>');
-    $size = $this->routing_instances_required ?
-      $routing_instances_count : $routing_instances_count + 1;
     print('<select size="'.$size.'" class="form-select" name="routing_instance" id="routing-instances">');
 
     $selected = ' selected="selected"';
-    if (!$this->routing_instances_required) {
+    if ($name_the_global_table) {
       print('<option value="none"'.$selected.'>None</option>');
       $selected = '';
     }

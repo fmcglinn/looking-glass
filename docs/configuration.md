@@ -385,6 +385,20 @@ is the name which will be exposed to the users on selection.
 The suffixes such as `inet.0` and `inet6.0` can be omitted for Juniper
 devices, only the names of routing instances are needed.
 
+The key `none` is reserved for the global routing table and is never sent to
+a router. Use it to give the global routing table a name of your own and to
+place it where you want in the list:
+
+```php
+$config['routing_instances'] = array(
+  'none' => 'Best effort', 'vrf-premium' => 'Premium'
+);
+```
+Without it the global routing table is offered first as `None`. It cannot be
+named by adding `inet.0` as an ordinary routing instance, because the global
+routing table is queried differently: the table is chosen to match the address
+family of the parameter, and ping and traceroute name no instance at all.
+
 ```php
 $config['routing_instances_required'] = false;
 ```
@@ -393,6 +407,10 @@ Force lookups to be made against a routing instance. When set to `true` the
 configured routing instance are rejected. Defaults to `false`, meaning users
 may choose `None` and query the global routing table. Has no effect when no
 routing instance is configured.
+
+Naming the global routing table with the `none` key keeps it available even
+when routing instances are required, since it is then a choice of its own
+rather than the absence of one.
 
 ### Misc.
 
